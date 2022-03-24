@@ -1,38 +1,38 @@
 /* eslint-disable default-case */
-import { useState, useEffect } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
-import Signup from "./components/Signup";
-import { auth } from "./fire";
+// import { useState, useEffect } from "react";
+// import {
+//   createUserWithEmailAndPassword,
+//   signInWithEmailAndPassword,
+//   onAuthStateChanged,
+//   signOut,
+// } from "firebase/auth";
+// import Signup from "./components/Signup";
+// import { auth } from "./fire";
 
 import Sidebar from "./components/Sidebar";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import Songs from "./pages/Songs";
 
 function App() {
-  const [user, setUser] = useState({});
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [hasAccount, setHasAccount] = useState(false);
-  const navigate = useNavigate();
+  // const [user, setUser] = useState({});
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [emailError, setEmailError] = useState("");
+  // const [passwordError, setPasswordError] = useState("");
+  // const [hasAccount, setHasAccount] = useState(false);
+  // const navigate = useNavigate();
 
-  const clearInputs = () => {
-    setEmail("");
-    setPassword("");
-  };
+  // const clearInputs = () => {
+  //   setEmail("");
+  //   setPassword("");
+  // };
 
-  const clearErrors = () => {
-    setEmailError("");
-    setPasswordError("");
-  };
+  // const clearErrors = () => {
+  //   setEmailError("");
+  //   setPasswordError("");
+  // };
 
   // const handleLogin = () => {
   //   clearErrors();
@@ -50,25 +50,25 @@ function App() {
   //   });
   // };
 
-  const handleLogin = async () => {
-    try {
-      clearErrors();
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
-      console.log(user);
-    } catch (error) {
-      switch (error.code) {
-        case "auth/invalid-email":
-        case "auth/user-disabled":
-        case "auth/user-not-found":
-          setEmailError(error.message);
-          break;
-        case "auth/wrong-password":
-          setPasswordError(error.message);
-          break;
-      }
-    }
-  };
+  // const handleLogin = async () => {
+  //   try {
+  //     clearErrors();
+  //     const user = await signInWithEmailAndPassword(auth, email, password);
+  //     navigate("/");
+  //     console.log(user);
+  //   } catch (error) {
+  //     switch (error.code) {
+  //       case "auth/invalid-email":
+  //       case "auth/user-disabled":
+  //       case "auth/user-not-found":
+  //         setEmailError(error.message);
+  //         break;
+  //       case "auth/wrong-password":
+  //         setPasswordError(error.message);
+  //         break;
+  //     }
+  //   }
+  // };
 
   // const handleSignup = () => {
   //   clearErrors();
@@ -85,32 +85,32 @@ function App() {
   //   });
   // };
 
-  const handleSignup = async () => {
-    try {
-      clearErrors();
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/");
-      console.log(user);
-    } catch (error) {
-      switch (error.code) {
-        case "auth/email-already-in-use":
-        case "auth/invalid-email":
-          setEmailError(error.message);
-          break;
-        case "auth/weak-password":
-          setPasswordError(error.message);
-          break;
-      }
-    }
-  };
+  // const handleSignup = async () => {
+  //   try {
+  //     clearErrors();
+  //     const user = await createUserWithEmailAndPassword(auth, email, password);
+  //     navigate("/");
+  //     console.log(user);
+  //   } catch (error) {
+  //     switch (error.code) {
+  //       case "auth/email-already-in-use":
+  //       case "auth/invalid-email":
+  //         setEmailError(error.message);
+  //         break;
+  //       case "auth/weak-password":
+  //         setPasswordError(error.message);
+  //         break;
+  //     }
+  //   }
+  // };
 
   // const handleLogout = () => {
   //   signOut(auth);
   // };
 
-  const handleLogout = async () => {
-    await signOut(auth);
-  };
+  // const handleLogout = async () => {
+  //   await signOut(auth);
+  // };
 
   // const authListener = () => {
   //   onAuthStateChanged(auth, (user) => {
@@ -123,17 +123,17 @@ function App() {
   //   });
   // };
 
-  const authListener = () => {
-    onAuthStateChanged(auth, (currentUser) => {
-      clearInputs();
-      setUser(currentUser);
-    });
-  };
+  // const authListener = () => {
+  //   onAuthStateChanged(auth, (currentUser) => {
+  //     clearInputs();
+  //     setUser(currentUser);
+  //   });
+  // };
 
-  useEffect(() => {
-    authListener();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   authListener();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="App">
