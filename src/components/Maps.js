@@ -8,7 +8,7 @@ import {
 } from "react-google-maps";
 import parkData from '../data/skateboard-parks.json';
 
-import mapStyles from "../mapStyles";
+import { mapStyles } from "../mapStyles";
 
 function Map() {
   const [selectedPark, setSelectedPark] = useState(null);
