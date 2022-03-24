@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { FaBars, FaHome } from "react-icons/fa";
 import { MdOutlineLibraryMusic } from "react-icons/md";
-import { BiSearch } from "react-icons/bi";
-import { AiFillHeart, AiFillBell } from "react-icons/ai";
+// import { BiSearch } from "react-icons/bi";
+import { AiFillBell } from "react-icons/ai";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
@@ -102,7 +102,7 @@ const SideBar = ({ children }) => {
             </div>
           </div>
 
-          <div className="search">
+          {/* <div className="search">
             <div className="search_icon">
               <BiSearch />
             </div>
@@ -118,7 +118,7 @@ const SideBar = ({ children }) => {
                 />
               )}
             </AnimatePresence>
-          </div>
+          </div> */}
           
           <section className="routes">
             {routes.map((route, index) => {

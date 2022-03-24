@@ -8,7 +8,7 @@ import {
 } from "react-google-maps";
 import parkData from '../data/skateboard-parks.json';
 
-// import mapStyles from "./mapStyles";
+import mapStyles from "../mapStyles";
 
 function Map() {
   const [selectedPark, setSelectedPark] = useState(null);
@@ -30,7 +30,7 @@ function Map() {
     <GoogleMap
       defaultZoom={10}
       defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
-      // defaultOptions={{ styles: mapStyles }}
+      defaultOptions={{ styles: mapStyles }}
     >
       {parkData.features.map((park) => (
         <Marker
@@ -75,7 +75,7 @@ export default function App() {
   return (
     <div style={{ width: "80vw", height: "80vh" }}>
       <MapWrapped
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
