@@ -22,9 +22,7 @@ function Map() {
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
   const [error, setError] = useState(undefined);
-  const [loading, setLoading] = useState(true);
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-  const center = { lat: 48.8584, lng: 2.2945 };
+  const [loading, setLoading] = useState(false);
 
   const originRef = useRef();
   const destinationRef = useRef();
@@ -32,7 +30,6 @@ function Map() {
   async function calculateRoute() {
     try {
       setError(false);
-      setLoading(true);
       if (
         originRef.current.value === "" ||
         destinationRef.current.value === ""
@@ -45,8 +42,8 @@ function Map() {
         destination: destinationRef.current.value,
         travelMode: window.google.maps.TravelMode.DRIVING,
       });
-      console.log(results);
       setDirectionsResponse(results);
+      setLoading(true);
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.text);
     } catch (error) {
@@ -83,7 +80,6 @@ function Map() {
         defaultZoom={10}
         defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
         defaultOptions={{ styles: mapStyles }}
-        onClick={(map) => setMap(map)}
       >
         {parkData.features.map((park) => (
           <Marker
@@ -173,14 +169,11 @@ function Map() {
               ""
             )}
             <span
-              onClick={() => {
-                map.panTo(center);
-                map.setZoom(15);
-              }}
               className="bg-[#009063] rounded-lg flex justify-center items-center w-10 h-10 cursor-pointer"
             >
               <FaLocationArrow className="text-white" />
             </span>
+            <span>{loading && <div>Loading...</div>}</span>
           </div>
           {error && (
             <p className="text-red-500 text-xs mt-2">

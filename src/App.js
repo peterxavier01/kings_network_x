@@ -26,10 +26,10 @@ const App = () => {
     themeSettings,
     setThemeSettings,
     currentColor,
-    currentMode,
-    handleCloseSidebar,
-    setCurrentColor,
-    setCurrentMode,
+    // currentMode,
+    // handleCloseSidebar,
+    // setCurrentColor,
+    // setCurrentMode,
   } = useStateContext();
 
   return (
