@@ -1,4 +1,3 @@
-/* eslint-disable default-case */
 // import { useState, useEffect } from "react";
 // import {
 //   createUserWithEmailAndPassword,
@@ -9,166 +8,81 @@
 // import Signup from "./components/Signup";
 // import { auth } from "./fire";
 
-import Sidebar from "./components/Sidebar";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Sidebar from "./components/Sidebar";
 import Events from "./pages/Events";
 import Songs from "./pages/Songs";
+import Navbar from "./components/Navbar";
+import ThemeSettings from "./components/ThemeSettings";
+import { useStateContext } from "./contexts/ContextProvider";
 
-function App() {
-  // const [user, setUser] = useState({});
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [emailError, setEmailError] = useState("");
-  // const [passwordError, setPasswordError] = useState("");
-  // const [hasAccount, setHasAccount] = useState(false);
-  // const navigate = useNavigate();
+import { Tooltip } from "@material-ui/core";
+import { FiSettings } from "react-icons/fi";
 
-  // const clearInputs = () => {
-  //   setEmail("");
-  //   setPassword("");
-  // };
-
-  // const clearErrors = () => {
-  //   setEmailError("");
-  //   setPasswordError("");
-  // };
-
-  // const handleLogin = () => {
-  //   clearErrors();
-  //   signInWithEmailAndPassword(auth, email, password).catch((err) => {
-  //     switch (err.code) {
-  //       case "auth/invalid-email":
-  //       case "auth/user-disabled":
-  //       case "auth/user-not-found":
-  //         setEmailError(err.message);
-  //         break;
-  //       case "auth/wrong-password":
-  //         setPasswordError(err.message);
-  //         break;
-  //     }
-  //   });
-  // };
-
-  // const handleLogin = async () => {
-  //   try {
-  //     clearErrors();
-  //     const user = await signInWithEmailAndPassword(auth, email, password);
-  //     navigate("/");
-  //     console.log(user);
-  //   } catch (error) {
-  //     switch (error.code) {
-  //       case "auth/invalid-email":
-  //       case "auth/user-disabled":
-  //       case "auth/user-not-found":
-  //         setEmailError(error.message);
-  //         break;
-  //       case "auth/wrong-password":
-  //         setPasswordError(error.message);
-  //         break;
-  //     }
-  //   }
-  // };
-
-  // const handleSignup = () => {
-  //   clearErrors();
-  //   createUserWithEmailAndPassword(auth, email, password).catch((error) => {
-  //     switch (error.code) {
-  //       case "auth/email-already-in-use":
-  //       case "auth/invalid-email":
-  //         setEmailError(error.message);
-  //         break;
-  //       case "auth/weak-password":
-  //         setPasswordError(error.message);
-  //         break;
-  //     }
-  //   });
-  // };
-
-  // const handleSignup = async () => {
-  //   try {
-  //     clearErrors();
-  //     const user = await createUserWithEmailAndPassword(auth, email, password);
-  //     navigate("/");
-  //     console.log(user);
-  //   } catch (error) {
-  //     switch (error.code) {
-  //       case "auth/email-already-in-use":
-  //       case "auth/invalid-email":
-  //         setEmailError(error.message);
-  //         break;
-  //       case "auth/weak-password":
-  //         setPasswordError(error.message);
-  //         break;
-  //     }
-  //   }
-  // };
-
-  // const handleLogout = () => {
-  //   signOut(auth);
-  // };
-
-  // const handleLogout = async () => {
-  //   await signOut(auth);
-  // };
-
-  // const authListener = () => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       clearInputs();
-  //       setUser(user);
-  //     } else {
-  //       setUser("");
-  //     }
-  //   });
-  // };
-
-  // const authListener = () => {
-  //   onAuthStateChanged(auth, (currentUser) => {
-  //     clearInputs();
-  //     setUser(currentUser);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   authListener();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+const App = () => {
+  const {
+    activeMenu,
+    themeSettings,
+    setThemeSettings,
+    currentColor,
+    currentMode,
+    handleCloseSidebar,
+    setCurrentColor,
+    setCurrentMode,
+  } = useStateContext();
 
   return (
-    <div className="App">
-      <Sidebar>
-        <Routes>
-          <Route path="/" element={ <Home/> }/>
-          <Route path="/events" element={ <Events/> }/>
-          <Route path="/songs" element={ <Songs/> }/>
-          <Route path="*" element={ <h1>Page Not Found</h1> }/>
-        </Routes>
-      </Sidebar>
+    <div
+    // className={currentMode === "Dark" ? "dark" : ""}
+    // onClick={handleCloseSidebar}
+    >
+      <BrowserRouter>
+        <div className="flex relative dark:bg-main-dark-bg">
+          <div className="fixed hidden right-4 bottom-4" style={{ zIndex: "1000" }}>
+            <Tooltip title="Add" arrow>
+              <button
+                type="button"
+                className="text-3xl p-3 hover:drop-shadow-xl hover: bg-light-gray"
+                style={{ backgroundColor: "#fff", color: currentColor, borderRadius: "50%" }}
+                onClick={() => setThemeSettings(true)}
+              >
+                <FiSettings />
+              </button>
+            </Tooltip>
+          </div>
+          {activeMenu ? (
+            <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white">
+              <Sidebar />
+            </div>
+          ) : (
+            <div className="w-0 dark:bg-secondary-dark-bg">
+              <Sidebar />
+            </div>
+          )}
+          <div
+            className={`dark:bg-main-dark-bg bg-main-bg min-h-screen w-full ${
+              activeMenu ? "md:ml-72" : "flex-2"
+            }`}
+          >
+            <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
+              <Navbar />
+            </div>
+            <div className="px-2 md:px-4">
+              {themeSettings && <ThemeSettings />}
+
+              <Routes>
+                <Route path="/" element={ <Home /> } />
+                <Route path="/events" element={<Events />} />
+                <Route path="/messages" element={<Songs />} />
+                <Route path="*" element={<h1>Page Not Found</h1>} />
+              </Routes>
+            </div>
+          </div>
+        </div>
+      </BrowserRouter>
     </div>
   );
-
-  // return (
-  //   <div className="App">
-  //     {user ?
-  //         <Notifications />
-  //      :
-  //       <Signup
-  //         email={email}
-  //         setEmail={setEmail}
-  //         password={password}
-  //         setPassword={setPassword}
-  //         handleLogin={handleLogin}
-  //         handleSignup={handleSignup}
-  //         hasAccount={hasAccount}
-  //         setHasAccount={setHasAccount}
-  //         emailError={emailError}
-  //         passwordError={passwordError}
-  //       />
-  //     }
-  //   </div>
-  // );
-
-}
+};
 
 export default App;

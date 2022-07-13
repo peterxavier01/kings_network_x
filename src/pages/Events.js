@@ -1,20 +1,27 @@
-// import { Row, Col, Container, Carousel } from "react-bootstrap";
 import { useState } from 'react';
 
-const Notifications = () => {
+import image1 from "../images/sunday1.jpg";
+import image2 from "../images/monday2.jpg";
+import image3 from "../images/monday1.jpg";
+import image4 from "../images/wednesday3.jpg";
+import image5 from "../images/wednesday1.jpeg";
+import image6 from "../images/friday1.jpg";
+
+const Events = () => {
 
     const [articles] = useState([
-        { src: '/images/sunday1.jpg', genre: 'Sunday', title: 'Sunday Service', id: 1},
-        { src: 'images/monday2.jpg', genre: 'Monday', title: 'Foundation School', id: 2},
-        { src: 'images/monday1.jpg', genre: 'Tuesday', title: 'Leader\'s Meeting', id: 3},
-        { src: 'images/wednesday3.jpg', genre: 'Wednesday', title: 'Mid-week Service', id: 4},
-        { src: 'images/wednesday1.jpeg', genre: 'Thursday', title: 'Evangelism/Soul-winning', id: 5},
-        { src: 'images/friday1.jpg', genre: 'Friday', title: 'Prayer Meeting', id: 6}
+        { src: image1, genre: 'Sunday', title: 'Sunday Service', id: 1},
+        { src: image2, genre: 'Monday', title: 'Foundation School', id: 2},
+        { src: image3, genre: 'Tuesday', title: 'Leader\'s Meeting', id: 3},
+        { src: image4, genre: 'Wednesday', title: 'Mid-week Service', id: 4},
+        { src: image5, genre: 'Thursday', title: 'Evangelism/Soul-winning', id: 5},
+        { src: image6, genre: 'Friday', title: 'Prayer Meeting', id: 6}
     ]);
 
     return (
         <>
-            <h4 className="display-5 mb-2">Weekly Events</h4>
+        <div className="events-container">
+            <h4 className="display-5 mb-2 text-green-500">Weekly Events</h4>
             <div className="article">
                 {articles.map((article) => (
                         <article className="event-container" key={article.id}>
@@ -28,37 +35,9 @@ const Notifications = () => {
                     </article>
                 ))}
             </div>
-            {/* <div style={{ display: "block", width: 700 }}>
-            <h4 className="display-5 my-2">Upcoming Events</h4>
-            <div className="carousel-container">
-                <Carousel>
-                    <Carousel.Item interval={1500}>
-                        <img
-                            className="d-block w-100 car-img"
-                            src="/images/global.jpeg"
-                            alt="global day of prayer"
-                        />
-                        <Carousel.Caption>
-                            <h3>Label for first slide</h3>
-                            <p>Sample Text for Image One</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item interval={500}>
-                        <img
-                            className="d-block w-100 car-img"
-                            src="/images/global2.jpeg"
-                            alt="global day of prayer"
-                        />
-                        <Carousel.Caption>
-                            <h3>Label for second slide</h3>
-                            <p>Sample Text for Image Two</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel>
-                </div>
-            </div> */}
+        </div>
         </>
      );
 }
  
-export default Notifications;
+export default Events;
