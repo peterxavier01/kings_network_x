@@ -17,6 +17,7 @@ export const ContextProvider = ({ children }) => {
   const [currentMode, setCurrentMode] = useState("Light");
   const [themeSettings, setThemeSettings] = useState(false);
   const [searchBox, setSearchBox] = useState(false);
+  const [user, setUser] = useState(undefined);
 
   const setMode = (e) => {
     setCurrentMode(e.target.value);
@@ -58,7 +59,9 @@ export const ContextProvider = ({ children }) => {
         initialState,
         handleCloseSidebar,
         searchBox,
-        setSearchBox
+        setSearchBox,
+        user,
+        setUser
       }}
     >
       {children}

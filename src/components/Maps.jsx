@@ -15,7 +15,7 @@ import { Autocomplete } from "@react-google-maps/api";
 import { mapStyles } from "../mapStyles";
 
 function Map() {
-  const { searchBox } = useStateContext();
+  const { searchBox, setSearhBox, currentColor } = useStateContext();
   const [selectedPark, setSelectedPark] = useState(null);
 
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -36,6 +36,7 @@ function Map() {
       ) {
         return;
       }
+      setSearhBox(!searchBox);
       const directionsService = new window.google.maps.DirectionsService();
       const results = await directionsService.route({
         origin: originRef.current.value,
@@ -126,7 +127,7 @@ function Map() {
               <Autocomplete>
                 <input
                   type="text"
-                  placeholder="Origin"
+                  placeholder="Home"
                   ref={originRef}
                   className="outline-none border rounded-md p-2 text-slate-800"
                 />
@@ -136,7 +137,7 @@ function Map() {
               <Autocomplete>
                 <input
                   type="text"
-                  placeholder="Destination"
+                  placeholder="Loveworld branch"
                   ref={destinationRef}
                   className="outline-none border rounded-md p-2 text-slate-800"
                 />
@@ -147,7 +148,8 @@ function Map() {
               <button
                 type="submit"
                 onClick={calculateRoute}
-                className="bg-[#009063] p-2 text-sm text-white rounded-lg"
+                style={{ backgroundColor: currentColor }}
+                className="p-2 text-sm text-white rounded-lg"
               >
                 Calculate Route
               </button>
@@ -168,9 +170,7 @@ function Map() {
             ) : (
               ""
             )}
-            <span
-              className="bg-[#009063] rounded-lg flex justify-center items-center w-10 h-10 cursor-pointer"
-            >
+            <span className="bg-[#009063] rounded-lg flex justify-center items-center w-10 h-10 cursor-pointer">
               <FaLocationArrow className="text-white" />
             </span>
             <span>{loading && <div>Loading...</div>}</span>

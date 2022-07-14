@@ -14,6 +14,7 @@ const Navbar = () => {
     setScreenSize,
     searchBox,
     setSearchBox,
+    user
   } = useStateContext();
 
   useEffect(() => {
@@ -48,9 +49,12 @@ const Navbar = () => {
           </Tooltip>
         </div>
         <div>
-          <span className="text-lg md:text-2xl font-semibold">
-            Welcome, Joshua 🎉
-          </span>
+          {user && (
+            <span className="text-lg md:text-2xl font-semibold">
+              Welcome,{" "}
+              <span className="text-xs md:text-lg italic">{user?.email}</span> 🎉
+            </span>
+          )}
         </div>
       </div>
       <div className="flex justify-center items-center gap-4">

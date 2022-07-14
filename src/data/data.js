@@ -4,7 +4,7 @@ export const navLinks = [
   {
     icon: <AiOutlineHome />,
     title: "Home",
-    link: "",
+    link: "home",
   },
   {
     icon: <AiOutlineUser />,

@@ -1,70 +1,128 @@
-import React from "react";
+import { useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../fire";
+import { Link, useNavigate } from "react-router-dom";
+import { useStateContext } from "../contexts/ContextProvider";
 
-const Signup = (props) => {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    handleLogin,
-    handleSignup,
-    hasAccount,
-    setHasAccount,
-    emailError,
-    passwordError,
-  } = props;
+import { FcGoogle } from "react-icons/fc";
+
+const Signup = () => {
+  const { currentColor } = useStateContext();
+  const [data, setData] = useState({});
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleInput = (event) => {
+    let newInput = { [event.target.name]: event.target.value };
+    setData({ ...data, ...newInput });
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then((response) => {
+        sessionStorage.setItem(
+          "Auth Token",
+          response._tokenResponse.refreshToken
+        );
+        navigate("/login");
+      })
+      .catch((err) => {
+        if (err.code === "auth/email-already-in-use") {
+          setError("Email Already in Use");
+        } else if (err.code === "auth/weak-password") {
+          setError("Password should be at least six characters long");
+        } else {
+          setError("Please check if inputs were entered correctly");
+        }
+      });
+  };
+
+  let googleProvider = new GoogleAuthProvider();
+
+  const googleSignIn = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((response) => {
+        navigate("/home");
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
 
   return (
-    <form className="signup-container">
-      <div className="signup-flex">
-        <div className="form-group mt-5">
-            <label for="name" className="text-white">Email</label>
-            <input
+    <div className="signup mb-4 flex flex-col justify-center items-center min-h-[50vh] md:min-h-0 px-2">
+      <form className="bg-white p-4 rounded-lg md:w-400 w-full">
+        <h2 className="text-center font-semibold text-2xl md:text-4xl mb-4 text-gray-800">
+          Sign up
+        </h2>
+        <div className="flex flex-col justify-center items-center">
+          <span
+            onClick={googleSignIn}
+            className="border mb-4 flex justify-center items-center p-2 rounded-full hover:drop-shadow-sm cursor-pointer"
+          >
+            <FcGoogle className="text-2xl" />
+          </span>
+          <div className="relative">
+            <p className="lowercase text-sm">Or use your email account</p>
+          </div>
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="name" className="pb-1 font-semibold text-sm md:text-base">
+            Email
+          </label>
+          <input
             type="email"
-            className="form-control"
+            id="email"
             autoFocus
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            id="name"
-            aria-describedby="emailHelp"
+            className="border rounded-lg p-2 outline-none text-slate-800"
+            name="email"
+            onChange={(e) => handleInput(e)}
             placeholder="Enter Email"
-            />
-            <p className="errorMsg text-white">{emailError}</p>
+          />
         </div>
-        <div className="form-group">
-            <label for="password" className="text-white">Password</label>
-            <input
+
+        <div className="flex flex-col mb-3">
+          <label htmlFor="password" className="pb-1 font-semibold text-sm md:text-base">
+            Password
+          </label>
+          <input
+            name="password"
             type="password"
-            className="form-control"
             id="password"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            className="border rounded-lg p-2 outline-none text-slate-800"
+            onChange={(e) => handleInput(e)}
             placeholder="Enter Password"
-            />
-            <p className="errorMsg text-white">{passwordError}</p>
+          />
         </div>
-        <div className="btnContainer mb-4">
-            {hasAccount ? (
-                <>
-                    <button onClick={handleLogin} type="submit" className="signup-btn">
-                        Sign in
-                    </button>
-                    <p className="text-white">Don't have an account? <span className="signup-span" onClick={() => setHasAccount(!hasAccount)}>sign up</span></p>
-                </>
-            ) : (
-                <>
-                    <button onClick={handleSignup} type="submit" className="signup-btn">
-                        Sign up
-                    </button>
-                    <p className="text-white">Have an account? <span className="signup-span" onClick={() => setHasAccount(!hasAccount)}>sign in</span></p>
-                </>
-
-            )}
+        {error && <p className="errorMsg text-red-600 text-sm">{error}</p>}
+        <div className="flex flex-col items-center">
+          <>
+            <button
+              onClick={handleSignup}
+              type="submit"
+              className="text-white text-md px-5 py-3 rounded-lg mt-4 w-full"
+              style={{ backgroundColor: currentColor }}
+            >
+              Sign up
+            </button>
+            <p className="mt-3 text-md">
+              Have an account?{" "}
+              <Link to="/login" style={{ color: currentColor }}>
+                Sign in
+              </Link>
+            </p>
+          </>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

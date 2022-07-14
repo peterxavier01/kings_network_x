@@ -4,15 +4,24 @@ import { MdOutlineCancel } from "react-icons/md";
 import { Tooltip } from "@material-ui/core";
 
 import { navLinks } from "../data/data";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 
+import { auth } from "../fire";
+import { signOut } from "firebase/auth";
+
 const Sidebar = () => {
+  const navigate = useNavigate();
   const { setActiveMenu, currentColor, handleCloseSidebar } = useStateContext();
   const activeLink =
-    "flex items-center p-2 rounded-lg text-white text-xl text-white mb-4";
+    "flex items-center p-2 rounded-lg text-white text-lg text-white mb-4";
   const normalLink =
-    "flex items-center text-xl p-2 rounded-lg text-gray-500 mb-4 hover:bg-light-gray hover:text-gray-500";
+    "flex items-center text-lg p-2 rounded-lg text-gray-500 mb-4 hover:bg-light-gray hover:text-gray-500";
+
+  const logout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
 
   return (
     <div className="sidebar p-4 h-screen">
@@ -62,13 +71,11 @@ const Sidebar = () => {
             ))}
           </div>
         </div>
-        <div className="mb-4">
+        <div className="mb-4" onClick={handleCloseSidebar}>
           <NavLink
-            to="/logout"
-            style={({ isActive }) => ({
-              backgroundColor: isActive ? currentColor : "",
-            })}
-            className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            to=""
+            className={normalLink}
+            onClick={logout}
           >
             <span className="p-2">
               <AiOutlineLogout />
