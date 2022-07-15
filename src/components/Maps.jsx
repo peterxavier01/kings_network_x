@@ -36,7 +36,6 @@ function Map() {
       ) {
         return;
       }
-      setSearhBox(!searchBox);
       const directionsService = new window.google.maps.DirectionsService();
       const results = await directionsService.route({
         origin: originRef.current.value,
@@ -51,6 +50,7 @@ function Map() {
       setError(error);
     } finally {
       setLoading(false);
+      setSearhBox(!searchBox);
     }
   }
 
@@ -121,7 +121,7 @@ function Map() {
       </GoogleMap>
 
       {searchBox && (
-        <div className="absolute right-0 md:right-4 mx-2 md:m-0 top-4 bg-light-gray p-4 rounded-lg">
+        <div className="absolute right-0 md:right-4 mx-2 md:m-0 top-4 bg-light-gray dark:bg-main-dark-bg p-4 rounded-lg">
           <div className="flex gap-2 flex-wrap">
             <div>
               <Autocomplete>
@@ -129,7 +129,7 @@ function Map() {
                   type="text"
                   placeholder="Home"
                   ref={originRef}
-                  className="outline-none border rounded-md p-2 text-slate-800"
+                  className="outline-none border dark:bg-light-gray rounded-md p-2 text-slate-800"
                 />
               </Autocomplete>
             </div>
@@ -139,7 +139,7 @@ function Map() {
                   type="text"
                   placeholder="Loveworld branch"
                   ref={destinationRef}
-                  className="outline-none border rounded-md p-2 text-slate-800"
+                  className="outline-none border dark:bg-light-gray rounded-md p-2 text-slate-800"
                 />
               </Autocomplete>
             </div>
@@ -155,7 +155,7 @@ function Map() {
               </button>
               <span
                 onClick={clearRoute}
-                className="text-red-600 border p-1 text-xs rounded-md cursor-pointer"
+                className="text-red-600 dark:text-red-400 border p-1 text-xs rounded-md cursor-pointer"
               >
                 <FaTimes />
               </span>
@@ -170,7 +170,10 @@ function Map() {
             ) : (
               ""
             )}
-            <span className="bg-[#009063] rounded-lg flex justify-center items-center w-10 h-10 cursor-pointer">
+            <span
+              style={{ backgroundColor: currentColor }}
+              className="rounded-lg flex justify-center items-center w-10 h-10 cursor-pointer"
+            >
               <FaLocationArrow className="text-white" />
             </span>
             <span>{loading && <div>Loading...</div>}</span>

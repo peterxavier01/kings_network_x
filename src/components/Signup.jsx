@@ -108,12 +108,12 @@ const Signup = () => {
             <button
               onClick={handleSignup}
               type="submit"
-              className="text-white text-md px-5 py-3 rounded-lg mt-4 w-full"
+              className="text-white text-base px-5 py-3 rounded-lg mt-4 w-full"
               style={{ backgroundColor: currentColor }}
             >
               Sign up
             </button>
-            <p className="mt-3 text-md">
+            <p className="mt-3 text-base">
               Have an account?{" "}
               <Link to="/login" style={{ color: currentColor }}>
                 Sign in

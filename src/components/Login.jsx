@@ -134,17 +134,17 @@ const Login = () => {
             <button
               onClick={handleLogin}
               type="submit"
-              className="text-white text-md px-5 py-3 rounded-lg mt-4 w-full"
+              className="text-white text-base px-5 py-3 rounded-lg mt-4 w-full"
               style={{ backgroundColor: currentColor }}
             >
               Login
             </button>
             <div className="flex justify-end w-full mt-2">
-              <p className="text-sm md:text-md" onClick={resetEmail}>
+              <p className="text-sm md:text-base" onClick={resetEmail}>
                 Forgot password?
               </p>
             </div>
-            <p className="mt-3 md:text-md text-sm">
+            <p className="mt-3 md:text-base text-sm">
               Dont't have an account?{" "}
               <Link to="/signup" style={{ color: currentColor }}>
                 Sign up

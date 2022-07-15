@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Sidebar from "./components/Sidebar";
@@ -11,6 +12,8 @@ import { useStateContext } from "./contexts/ContextProvider";
 
 import { auth } from "./fire";
 import { onAuthStateChanged } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Loader from "./components/Loader";
 
 import { Tooltip } from "@material-ui/core";
 import { FiSettings } from "react-icons/fi";
@@ -21,29 +24,38 @@ const App = () => {
     themeSettings,
     setThemeSettings,
     currentColor,
-    user,
     setUser,
-    // currentMode,
-    // handleCloseSidebar,
-    // setCurrentColor,
-    // setCurrentMode,
+    currentMode,
+    handleCloseSidebar,
+    setCurrentColor,
+    setCurrentMode,
   } = useStateContext();
+
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem("colorMode");
+    const currentThemeMode = localStorage.getItem("themeMode");
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, [setCurrentColor, setCurrentMode]);
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
   });
 
+  // If only the useAuthState hook is used, loader will run indefinitely
+  const [user, loading] = useAuthState(auth);
+  if (loading) return <Loader />;
+
   return (
     <div
-    // className={currentMode === "Dark" ? "dark" : ""}
-    // onClick={handleCloseSidebar}
+      className={currentMode === "Dark" ? "dark" : ""}
+      onClick={handleCloseSidebar}
     >
-      <div className="flex relative dark:bg-main-dark-bg">
-        <div
-          className="fixed hidden right-4 bottom-4"
-          style={{ zIndex: "1000" }}
-        >
-          <Tooltip title="Add" arrow>
+      <div className="flex relative dark:dark-grey">
+        <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
+          <Tooltip title="Settings" arrow>
             <button
               type="button"
               className="text-3xl p-3 hover:drop-shadow-xl hover: bg-light-gray"
@@ -85,12 +97,14 @@ const App = () => {
                 </>
               ) : (
                 <>
-                 <Route path="/" element={<Navigate to="/login" />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<Signup />} />
                 </>
               )}
-              <Route path="*" element={<h1>Page Not Found</h1>} />
+              <Route
+                path="*"
+                element={<Navigate to={user ? "/home" : "/login"} />}
+              />
             </Routes>
           </div>
         </div>

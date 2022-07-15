@@ -16,7 +16,7 @@ const Sidebar = () => {
   const activeLink =
     "flex items-center p-2 rounded-lg text-white text-lg text-white mb-4";
   const normalLink =
-    "flex items-center text-lg p-2 rounded-lg text-gray-500 mb-4 hover:bg-light-gray hover:text-gray-500";
+    "flex items-center text-lg p-2 dark:text-gray-200 rounded-lg text-gray-500 mb-4 hover:bg-light-gray hover:text-gray-500 dark:hover:text-slate-800";
 
   const logout = async () => {
     await signOut(auth);
@@ -24,8 +24,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar p-4 h-screen">
-      <div className="flex flex-col h-screen justify-between">
+    <div className="sidebar p-4 h-screen dark:bg-secondary-dark-bg">
+      <div className="flex flex-col h-full justify-between">
         <div>
           <div className="flex items-center border-b-1 border-gray-200 mb-4">
             <Link
@@ -36,7 +36,9 @@ const Sidebar = () => {
               <span className="pr-2 w-[50px] h-[50px]">
                 <img src={Logo} className="w-full" alt="kings-network-logo" />
               </span>
-              <span className="text-lg text-gray-500 pr-3">King's Network</span>
+              <span className="text-lg text-gray-500 dark:text-gray-200 pr-3">
+                King's Network
+              </span>
             </Link>
             <div>
               <Tooltip title="Close" arrow>
@@ -45,7 +47,7 @@ const Sidebar = () => {
                   onClick={() =>
                     setActiveMenu((prevActiveMenu) => !prevActiveMenu)
                   }
-                  className="text-xl rounded-full p-3 hover:bg-light-gray block md:hidden"
+                  className="text-xl dark:text-gray-200 dark:hover:text-slate-800 rounded-full p-3 hover:bg-light-gray block md:hidden"
                 >
                   <MdOutlineCancel />
                 </button>
@@ -72,11 +74,7 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="mb-4" onClick={handleCloseSidebar}>
-          <NavLink
-            to=""
-            className={normalLink}
-            onClick={logout}
-          >
+          <NavLink to="" className={normalLink} onClick={logout}>
             <span className="p-2">
               <AiOutlineLogout />
             </span>

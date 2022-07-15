@@ -6,8 +6,20 @@ body {
   font-family: "Lato", sans-serif !important;
 }
 
+.navbar,
+.nav-item {
+  z-index: 100;
+}
+
 .sidebar {
-  z-index: 10000000;
+  z-index: 1000;
+}
+
+@media screen and (min-width: 768px) {
+  .nav-bar {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 a {
@@ -15,12 +27,12 @@ a {
 }
 
 ::placeholder {
-  color: rgb(148 163 184) !important;
+  color: hsl(215, 20%, 45%) !important;
 }
 
 @media screen and (max-width: 640px) {
   ::placeholder {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -34,6 +46,42 @@ a {
 
 ::-webkit-scrollbar-thumb {
   background-color: hsl(178, 14%, 25%);
+}
+
+.username {
+  word-wrap: break-word !important;
+}
+
+.events .swiper-slide {
+  width: 350px !important;
+}
+
+.events .swiper-pagination {
+  position: relative;
+  margin-top: 20px;
+}
+
+.events .swiper-pagination-bullet-active {
+  background: #009063 !important;
+}
+
+.mySwiper {
+  overflow: hidden !important;
+}
+
+.bgr-white {
+  background-color: rgb(255, 255, 255);
+}
+
+@media screen and (min-width: 768px) {
+  .events {
+    overflow: hidden !important;
+    width: 71.2vw;
+  }
+
+  .events .swiper-pagination {
+    display: none !important;
+  }
 }
 
 @tailwind base;

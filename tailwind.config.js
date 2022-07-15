@@ -13,7 +13,7 @@ module.exports = {
       backgroundColor: {
         "main-bg": "hsl(259, 100%, 98%)",
         "main-dark-bg": " hsl(0, 0%, 15%)",
-        "secondary-dark-bg": "hsl(178, 14%, 25%)",
+        "secondary-dark-bg": "hsl(0, 0%, 25%)",
         "light-gray": "#F7F7F7",
         "half-transparent": "rgba(0, 0, 0, 0.5)",
       },

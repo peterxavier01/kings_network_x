@@ -10,11 +10,12 @@ const Navbar = () => {
   const {
     activeMenu,
     setActiveMenu,
+    currentColor,
     screenSize,
     setScreenSize,
     searchBox,
     setSearchBox,
-    user
+    user,
   } = useStateContext();
 
   useEffect(() => {
@@ -36,35 +37,41 @@ const Navbar = () => {
   }, [screenSize, setActiveMenu]);
 
   const badge =
-    "bg-red-500 text-sm flex items-center justify-center w-5 h-5 rounded-full text-white absolute";
+    "bg-red-500 text-xs md:text-sm flex items-center justify-center w-4 h-4 md:w-5 md:h-5 rounded-full text-white absolute";
 
   return (
-    <div className="flex justify-between w-full pt-3 md:pt-2 pb-4 px-4 h-24">
-      <div className="flex items-center mr-2">
-        <div className="pr-8">
+    <div className="flex dark:text-gray-200 justify-between w-full pt-3 pb-4 px-4 h-24 md:pt-2 nav-bar">
+      <div className="flex items-center mr-2 mb-2">
+        <div className="pr-3 md:pr-8">
           <Tooltip title="Menu" arrow>
             <button type="button" onClick={() => setActiveMenu(!activeMenu)}>
-              <AiOutlineMenu className="text-xl" />
+              <AiOutlineMenu className="text-lg md:text-xl" />
             </button>
           </Tooltip>
         </div>
         <div>
           {user && (
-            <span className="text-lg md:text-2xl font-semibold">
+            <span className="text-md md:text-2xl font-semibold">
               Welcome,{" "}
-              <span className="text-xs md:text-lg italic">{user?.email}</span> 🎉
+              <span className="text-xs md:text-lg username italic">
+                {user?.email}
+              </span>{" "}
+              🎉
             </span>
           )}
         </div>
       </div>
-      <div className="flex justify-center items-center gap-4">
+      <div className="flex justify-center items-center md:gap-4 gap-3">
         <Tooltip title="Find Churches" arrow>
           <div
             onClick={() => setSearchBox(!searchBox)}
-            className="bg-white p-3 cursor-pointer hover:drop-shadow-lg rounded-full"
+            className="dark:bg-light-gray bgr-white p-3 cursor-pointer hover:drop-shadow-lg rounded-full"
           >
             <span>
-              <AiOutlineSearch className="text-[#009063] text-lg" />
+              <AiOutlineSearch
+                style={{ color: currentColor }}
+                className="text-sm md:text-lg"
+              />
             </span>
           </div>
         </Tooltip>
@@ -77,7 +84,7 @@ const Navbar = () => {
                 2
               </span>
               <span>
-                <AiOutlineBell className="md:text-2xl text-xl" />
+                <AiOutlineBell className="md:text-2xl text-lg" />
               </span>
             </button>
           </Tooltip>
@@ -91,7 +98,7 @@ const Navbar = () => {
                 4
               </span>
               <span>
-                <MdOutlineMessage className="md:text-2xl text-xl" />
+                <MdOutlineMessage className="md:text-2xl text-lg" />
               </span>
             </button>
           </Tooltip>
